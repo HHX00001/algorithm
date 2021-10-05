@@ -1,6 +1,5 @@
 package cn.hhx.leetcode.addtwonums;
 
-import java.awt.*;
 
 /**
  * @author hhxStellar
