@@ -13,4 +13,10 @@ public class MyTest {
         System.out.println(arr.length);
     }
 
+    @Test
+    public void test1() {
+        int[] ints = new int[10];
+        System.out.println(ints.length);
+    }
+
 }
