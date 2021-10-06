@@ -5,6 +5,7 @@ import java.util.Stack;
 
 /**
  * 逆波兰表达式计算器
+ *
  * @author hhxStellar
  * @date 2021/10/6-19:14
  */
@@ -24,7 +25,7 @@ public class PolandNotation {
     public void calculate() {
         Stack<String> stack = new Stack<>();
         for (String item : strings) {
-            if (item.matches("\\d")) {
+            if (item.matches("\\d+")) {
                 stack.push(item);
             } else {
                 int num2 = Integer.valueOf(stack.pop());
