@@ -1,4 +1,4 @@
-package cn.hhx.algorithm.doublelinkedlist;
+package cn.hhx.algorithm1.list.doublelinkedlist;
 
 import org.junit.Test;
 

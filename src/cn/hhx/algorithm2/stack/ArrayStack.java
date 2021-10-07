@@ -1,4 +1,4 @@
-package cn.hhx.algorithm.stack;
+package cn.hhx.algorithm2.stack;
 
 /**
  * 用数组实现栈

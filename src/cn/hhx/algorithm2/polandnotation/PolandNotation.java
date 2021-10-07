@@ -1,6 +1,4 @@
-package cn.hhx.algorithm.polandnotation;
-
-import org.junit.Test;
+package cn.hhx.algorithm2.polandnotation;
 
 import java.util.ArrayList;
 import java.util.Stack;

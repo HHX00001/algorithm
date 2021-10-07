@@ -1,4 +1,4 @@
-package cn.hhx.algorithm.polandnotation;
+package cn.hhx.algorithm2.polandnotation;
 
 import org.junit.Test;
 

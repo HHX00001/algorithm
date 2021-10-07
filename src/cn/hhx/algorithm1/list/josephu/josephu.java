@@ -1,7 +1,7 @@
-package cn.hhx.algorithm.josephu;
+package cn.hhx.algorithm1.list.josephu;
 
-import cn.hhx.algorithm.singlelinkedList.Node;
-import cn.hhx.algorithm.singlelinkedList.SingleLinkedList;
+import cn.hhx.algorithm1.list.singlelinkedList.Node;
+import cn.hhx.algorithm1.list.singlelinkedList.SingleLinkedList;
 import org.junit.Test;
 
 import java.util.ArrayList;

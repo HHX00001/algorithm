@@ -1,4 +1,4 @@
-package cn.hhx.algorithm.singlelinkedList;
+package cn.hhx.algorithm1.list.singlelinkedList;
 
 import org.junit.Test;
 
