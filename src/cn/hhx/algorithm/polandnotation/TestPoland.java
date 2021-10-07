@@ -17,4 +17,14 @@ public class TestPoland {
         System.out.println(res);
     }
 
+    @Test
+    public void test2() {
+//        String expression = "1 + ( ( 2 + 3 ) * 4 ) - 5 ";
+        String expression = "( 3 + 4 ) * 5 - 8 / 2";
+        PolandNotation polandNotation = new PolandNotation();
+        polandNotation.parseToSuffixExp(expression);
+        polandNotation.calculate();
+        System.out.println(polandNotation.getRes());
+    }
+
 }
