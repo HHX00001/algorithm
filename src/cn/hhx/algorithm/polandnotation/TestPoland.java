@@ -9,7 +9,7 @@ import org.junit.Test;
 public class TestPoland {
     @Test
     public void test1() {
-        String suffixExp = "4 5 * 8 - 60 + 8 2 / +";
+        String suffixExp = "10 6 9 3 + -11 * / * 17 + 5 +";
         PolandNotation polandCal = new PolandNotation();
         polandCal.setListStr(suffixExp);
         polandCal.calculate();
