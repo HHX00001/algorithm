@@ -19,23 +19,25 @@ public class ShellSort {
     }
 
     public static int[] shellSort(int[] arr) {
-        //循环将增量除2
+        //循环将增量除以2
         for (int i = arr.length / 2; i > 0; i /= 2) {
+            //按照增量分组，记录每组的开头
             for (int j = 0; j < i; j++) {
+                //每组前k+1个元素为有序表,k为每组有序表中最后一个元素的索引
                 for (int k = j; k < arr.length - i; k += i) {
+                    //每组有序元素表的后一个元素开始跟有序表排序，从后向前插入
                     for (int l = k + i; l > j; l -= i) {
                         if (arr[l] < arr[l - i]) {
                             int temp = arr[l];
                             arr[l] = arr[l - i];
                             arr[l - i] = temp;
-                        } else
+                        }
+                        else
                             break;
                     }
                 }
             }
         }
-
-
         return arr;
     }
 }
