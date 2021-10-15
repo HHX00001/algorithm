@@ -79,13 +79,14 @@ public class ThreadedBinaryTree {
     }
 
     private void preOrderList(ThreadTreeNode node) {
-        System.out.println(node);
+        while (node != null) {
+            while (!node.isLeftThread() && node.getLeft() != null) {
+                System.out.println(node);
+                node = node.getLeft();
+            }
 
-        if (node.getLeft() != null && !node.isLeftThread()) {
-            preOrderList(node.getLeft());
-        }
-        if (node.getRight() != null && !node.isRightThread()) {
-            preOrderList(node.getRight());
+            System.out.println(node);
+            node = node.getRight();
         }
     }
 
