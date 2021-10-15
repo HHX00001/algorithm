@@ -5,25 +5,25 @@ package cn.hhx.algorithm7.threadedbinarytree;
  * @date 2021/10/14-17:55
  */
 public class ThreadTreeNode {
-    private String value;
+    private int value;
     private ThreadTreeNode left;
     private ThreadTreeNode right;
 
-    private boolean leftType; //true则是线索化，指向前驱(后驱),false则指向子树
-    private boolean rightType;
+    private boolean isLeftThread; //true则是线索化，指向前驱(后驱),false则指向子树
+    private boolean isRightThread;
 
     public ThreadTreeNode() {
     }
 
-    public ThreadTreeNode(String value) {
+    public ThreadTreeNode(int value) {
         this.value = value;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
@@ -43,20 +43,20 @@ public class ThreadTreeNode {
         this.right = right;
     }
 
-    public boolean isLeftType() {
-        return leftType;
+    public boolean isLeftThread() {
+        return isLeftThread;
     }
 
-    public void setLeftType(boolean leftType) {
-        this.leftType = leftType;
+    public void setLeftThread(boolean leftThread) {
+        isLeftThread = leftThread;
     }
 
-    public boolean isRightType() {
-        return rightType;
+    public boolean isRightThread() {
+        return isRightThread;
     }
 
-    public void setRightType(boolean rightType) {
-        this.rightType = rightType;
+    public void setRightThread(boolean rightThread) {
+        isRightThread = rightThread;
     }
 
     @Override
