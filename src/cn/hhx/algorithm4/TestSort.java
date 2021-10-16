@@ -18,9 +18,9 @@ import sun.misc.GC;
 public class TestSort {
     @Test
     public void test() {
-        int[] arr = new int[80000];
+        int[] arr = new int[500000];
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) (Math.random() * 8000000);
+            arr[i] = (int) (Math.random() * 1000000);
 //            arr[i] = 60000 - i;
         }
 
