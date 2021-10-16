@@ -38,10 +38,13 @@ public class TestHuffmanCoding {
         byte myByte = Byte.parseByte(str, 2);
         System.out.println(myByte);
 
-        byte i = 1;
-        int i1 = i;
+
+        int i1 = 28;
         System.out.println(Integer.toBinaryString(i1));
         i1 |= 256;
         System.out.println(Integer.toBinaryString(i1));
+        System.out.println(str.length());
+        String substring = str.substring(0, 1);
+        System.out.println(substring.length());
     }
 }

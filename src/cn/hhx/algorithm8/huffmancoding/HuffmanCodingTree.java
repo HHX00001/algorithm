@@ -1,9 +1,6 @@
 package cn.hhx.algorithm8.huffmancoding;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author hhxStellar
@@ -12,18 +9,54 @@ import java.util.Map;
 public class HuffmanCodingTree {
     private HuffmanCodingTreeNode root;
     private Map<Byte, String> codingMap;
+    private List<HuffmanCodingTreeNode> nodeList;
 
+    public HuffmanCodingTree() {
+
+    }
+
+
+    public void init(byte[] preBytes) {
+        nodeList = getList(preBytes);
+        construct(nodeList);
+        createEncoding();
+    }
 
     //返回编码表
     public Map<Byte, String> getCodingMap() {
-        if (codingMap == null) {
-            createEncoding();
-        }
         return codingMap;
     }
 
+    /**
+     * 将传进的字节数组转化为叶子节点，含权值（字节出现的次数）和包含的数据（字节本身）
+     * 返回一个包含所有叶子节点的List
+     *
+     * @param content
+     * @return
+     */
+    private List<HuffmanCodingTreeNode> getList(byte[] content) {
+        List<HuffmanCodingTreeNode> contentList = new ArrayList<>();
+        Map<Byte, Integer> contentMap = new HashMap<>();
+        for (byte elem : content) {
+            Integer count = contentMap.get(elem);
+            if (count == null) {
+                contentMap.put(elem, 1);
+            } else {
+                contentMap.put(elem, count + 1);
+            }
+        }
+
+        for (Map.Entry<Byte, Integer> elem : contentMap.entrySet()) {
+            contentList.add(new HuffmanCodingTreeNode(elem.getKey(), elem.getValue()));
+        }
+
+
+        return contentList;
+    }
+
+
     //根据传入的叶子节点构建huffman树
-    public void construct(List<HuffmanCodingTreeNode> nodeList) {
+    private void construct(List<HuffmanCodingTreeNode> nodeList) {
 
         while (nodeList.size() > 1) {
             Collections.sort(nodeList);
@@ -39,6 +72,9 @@ public class HuffmanCodingTree {
         root = nodeList.remove(0);
     }
 
+    /**
+     * 打印huffman树
+     */
     public void preOrderList() {
         if (root == null) {
             System.out.println("树为空");
@@ -47,6 +83,11 @@ public class HuffmanCodingTree {
         preOrderList(root);
     }
 
+    /**
+     * 递归打印huffman编码树
+     *
+     * @param node
+     */
     private void preOrderList(HuffmanCodingTreeNode node) {
         System.out.println(node);
         if (node.getLeft() != null) {

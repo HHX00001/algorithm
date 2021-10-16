@@ -8,60 +8,47 @@ import java.util.*;
  */
 public class HuffmanCoding {
     public static void main(String[] args) {
+
+        HuffmanCoding huffmanCoding = new HuffmanCoding();
         //将字符串转化为字节数组
-        String s = "i like like like java do you like a java";
+        String s = "fuck u !! son of a bitch";
         byte[] preBytes = s.getBytes();
-//        System.out.println(preBytes.length); 旧的长度为40
-        //。。。
 
-        byte[] zip = zip(preBytes);
-//        System.out.println(zip.length); 新的长度为17
-        byteToBit(zip[0]);
+        Map<Byte, String> encodeMap = huffmanCoding.getEncodeMap(preBytes);
 
+        byte[] zip = huffmanCoding.zip(preBytes, encodeMap);
+
+        byte[] unzip = huffmanCoding.unzip(zip, encodeMap);
+        for (byte elem : unzip) {
+            System.out.print((char) elem);
+        }
     }
+
 
     /**
-     * 将传进的字节数组转化为叶子节点，含权值（字节出现的次数）和包含的数据（字节本身）
-     * 返回一个包含所有叶子节点的List
+     * 根据原文字节数组构建huffman编码树
+     * 并获取huffman编码表
      *
-     * @param content
+     * @param preBytes
      * @return
      */
-    private static List<HuffmanCodingTreeNode> getList(byte[] content) {
-        List<HuffmanCodingTreeNode> contentList = new ArrayList<>();
-        Map<Byte, Integer> contentMap = new HashMap<>();
-        for (byte elem : content) {
-            Integer count = contentMap.get(elem);
-            if (count == null) {
-                contentMap.put(elem, 1);
-            } else {
-                contentMap.put(elem, count + 1);
-            }
-        }
-
-        for (Map.Entry<Byte, Integer> elem : contentMap.entrySet()) {
-            contentList.add(new HuffmanCodingTreeNode(elem.getKey(), elem.getValue()));
-        }
-
-
-        return contentList;
-    }
-
-    public static byte[] zip(byte[] preBytes) {
+    public Map<Byte, String> getEncodeMap(byte[] preBytes) {
         HuffmanCodingTree huffmanCodingTree = new HuffmanCodingTree();
-        List<HuffmanCodingTreeNode> nodeList = getList(preBytes);
-
-        //根据传入的叶子节点构建huffman树
-        huffmanCodingTree.construct(nodeList);
-        //获取编码表
+        huffmanCodingTree.init(preBytes);
         Map<Byte, String> codingMap = huffmanCodingTree.getCodingMap();
 
-        byte[] zip = zip(preBytes, codingMap);
-
-        return zip;
+        return codingMap;
     }
 
-    private static byte[] zip(byte[] preData, Map<Byte, String> codingMap) {
+
+    /**
+     * 根据huffman编码表，将原有的数据字节数组转化为压缩后的字节数组
+     *
+     * @param preData
+     * @param codingMap
+     * @return
+     */
+    public byte[] zip(byte[] preData, Map<Byte, String> codingMap) {
         StringBuilder stringBuilder = new StringBuilder();
         for (byte elem : preData) {
             stringBuilder.append(codingMap.get(elem));
@@ -74,8 +61,9 @@ public class HuffmanCoding {
             len = len / 8 + 1;
         }
 
-        byte[] newByte = new byte[len];
-        for (int i = 0, j = 0; i < stringBuilder.length() && j < newByte.length; i += 8, j++) {
+        byte[] newByte = new byte[len + 1];
+        newByte[0] = (byte) (stringBuilder.length() % 8);
+        for (int i = 0, j = 1; i < stringBuilder.length() && j < newByte.length; i += 8, j++) {
             String byteStr;
             if (i + 8 > stringBuilder.length()) {
                 byteStr = stringBuilder.substring(i);
@@ -84,21 +72,79 @@ public class HuffmanCoding {
             }
             newByte[j] = (byte) Integer.parseInt(byteStr, 2);
         }
-
         return newByte;
     }
 
-    public static String unzip(byte[] zipData, Map<Byte, String> codingMap) {
+
+    /**
+     * 根据编码表，将压缩的字节数组解压为原文字节数组
+     *
+     * @param zipData
+     * @param codingMap
+     * @return
+     */
+    public byte[] unzip(byte[] zipData, Map<Byte, String> codingMap) {
+        StringBuilder codeString = new StringBuilder();
+        for (int i = 1; i < zipData.length - 1; i++) {
+            codeString.append(byteToBit(zipData[i]));
+        }
+        codeString.append(byteToBit(zipData[zipData.length - 1], (int) zipData[0]));
+        System.out.println(codingMap);
+
+        Map<String, Byte> decodeMap = new HashMap<>();
+        for (Map.Entry<Byte, String> elem : codingMap.entrySet()) {
+            decodeMap.put(elem.getValue(), elem.getKey());
+        }
 
 
-        return null;
+        List<Byte> byteList = new ArrayList<>();
+        int i = 0, j = 1;
+        while (i < codeString.length()) {
+            while (!decodeMap.containsKey(codeString.substring(i, j)) && j < codeString.length()) {
+                j++;
+            }
+            byte matchByte = decodeMap.get(codeString.substring(i, j));
+            byteList.add(matchByte);
+            i = j;
+            j = i + 1;
+        }
+        byte[] preBytes = new byte[byteList.size()];
+        for (int k = 0; k < preBytes.length; k++) {
+            preBytes[k] = byteList.get(k);
+        }
+        return preBytes;
     }
 
-    public static void byteToBit(byte preByte) {
+    /**
+     * 将前面的字节转为二进制字符串
+     *
+     * @param preByte
+     * @return
+     */
+    private String byteToBit(byte preByte) {
         int temp = preByte;
-        temp &= 255;
+        temp |= 256;
         String string = Integer.toBinaryString(temp);
-        System.out.println(string);
+        string = string.substring(string.length() - 8);
+        return string;
+    }
 
+    /**
+     * 将最后一个字节转为二进制字符串
+     *
+     * @param preByte
+     * @param i
+     * @return
+     */
+    private String byteToBit(byte preByte, int i) {
+        int temp = preByte;
+        temp |= 256;
+        String string = Integer.toBinaryString(temp);
+        if (i != 0) {
+            string = string.substring(string.length() - i);
+        } else {
+            string = string.substring(string.length() - 8);
+        }
+        return string;
     }
 }
