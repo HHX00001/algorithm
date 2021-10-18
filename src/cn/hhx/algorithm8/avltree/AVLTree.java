@@ -37,29 +37,41 @@ public class AVLTree {
         leftRotate(root, null, false);
     }
 
-    private void leftRotate(AVLTreeNode node, AVLTreeNode parent, boolean isLeft) {
+    private AVLTreeNode leftRotate(AVLTreeNode node, AVLTreeNode parent, boolean isLeft) {
+        if (node.getRight() != null) {
+            AVLTreeNode right = node.getRight();
+            while (right.getLeftHeight() > right.getRightHeight()) {
+                right = rightRotate(right, node, false);
+            }
+        }
+
         AVLTreeNode newRoot = node.getRight();
         node.setRight(newRoot.getLeft());
         newRoot.setLeft(node);
         if (parent != null) {
             if (isLeft) {
                 parent.setLeft(newRoot);
-
             } else {
                 parent.setRight(newRoot);
-
             }
         } else {
             root = newRoot;
-
         }
+        return newRoot;
     }
 
     public void rightRotate() {
         rightRotate(root, null, false);
     }
 
-    private void rightRotate(AVLTreeNode node, AVLTreeNode parent, boolean isLeft) {
+    private AVLTreeNode rightRotate(AVLTreeNode node, AVLTreeNode parent, boolean isLeft) {
+        if (node.getLeft() != null) {
+            AVLTreeNode Left = node.getLeft();
+            while (Left.getRightHeight() > Left.getLeftHeight()) {
+                Left = leftRotate(Left, node, true);
+            }
+        }
+
         AVLTreeNode newRoot = node.getLeft();
         node.setLeft(newRoot.getRight());
         newRoot.setRight(node);
@@ -71,35 +83,32 @@ public class AVLTree {
             }
         } else {
             root = newRoot;
+
         }
+        return newRoot;
     }
 
     public void rotateAdjust() {
         rotateAdjust(root, null, false);
     }
 
-    //有错误，待修改
     private void rotateAdjust(AVLTreeNode rootNode, AVLTreeNode parent, boolean isLeft) {
         if (rootNode.getLeft() != null) {
             rotateAdjust(rootNode.getLeft(), rootNode, true);
         }
 
         if (rootNode.getRight() != null) {
-            rotateAdjust(rootNode.getRight(), rootNode, true);
+            rotateAdjust(rootNode.getRight(), rootNode, false);
         }
 
-        int leftHeight = rootNode.getLeft() == null ? 0 : rootNode.getLeft().getHeight();
-        int rightHeight = rootNode.getRight() == null ? 0 : rootNode.getRight().getHeight();
-
-        while (leftHeight + 1 < rightHeight || leftHeight > rightHeight + 1) {
-            if (leftHeight + 1 < rightHeight) {
-                leftRotate(rootNode, parent, isLeft);
+        while (rootNode.getLeftHeight() + 1 < rootNode.getRightHeight() || rootNode.getLeftHeight() > rootNode.getRightHeight() + 1) {
+            if (rootNode.getLeftHeight() + 1 < rootNode.getRightHeight()) {
+                rootNode = leftRotate(rootNode, parent, isLeft);
             } else {
-                rightRotate(rootNode, parent, isLeft);
+                rootNode = rightRotate(rootNode, parent, isLeft);
             }
-            leftHeight = rootNode.getLeft() == null ? 0 : rootNode.getLeft().getHeight();
-            rightHeight = rootNode.getRight() == null ? 0 : rootNode.getRight().getHeight();
         }
+
     }
 
     public void inOrderList() {

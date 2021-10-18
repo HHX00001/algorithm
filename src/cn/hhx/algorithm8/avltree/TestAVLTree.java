@@ -24,23 +24,23 @@ public class TestAVLTree {
     @Test
     public void test() {
         AVLTree avlTree = new AVLTree();
-        int[] arr = new int[]{10, 12, 8, 9, 7, 6};
+        int[] arr = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
         for (int i = 0; i < arr.length; i++) {
             avlTree.add(new AVLTreeNode(i, arr[i]));
         }
 
         avlTree.inOrderList();
         System.out.println("---------------");
-        avlTree.rightRotate();
+//        avlTree.rightRotate();
         avlTree.inOrderList();
     }
 
     @Test
     public void test1() {
         AVLTree avlTree = new AVLTree();
-        int[] arr = new int[]{10, 11, 7, 6, 8, 9};
+        int[] arr = new int[10];
         for (int i = 0; i < arr.length; i++) {
-            avlTree.add(new AVLTreeNode(i, arr[i]));
+            avlTree.add(new AVLTreeNode(i, (int) (Math.random() * 20)));
         }
 
         avlTree.inOrderList();

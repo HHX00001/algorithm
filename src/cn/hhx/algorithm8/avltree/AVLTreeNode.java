@@ -22,6 +22,14 @@ public class AVLTreeNode {
         return Math.max(left == null ? 0 : left.getHeight(), right == null ? 0 : right.getHeight()) + 1;
     }
 
+    public int getLeftHeight() {
+        return left == null ? 0 : left.getHeight();
+    }
+
+    public int getRightHeight() {
+        return right == null ? 0 : right.getHeight();
+    }
+
     public int getValue() {
         return value;
     }
@@ -45,8 +53,6 @@ public class AVLTreeNode {
     public void setRight(AVLTreeNode right) {
         this.right = right;
     }
-
-
 
 
     @Override
